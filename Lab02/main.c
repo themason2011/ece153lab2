@@ -37,22 +37,32 @@ void PWM_Init() {
 		//Seting availible register to 0s 
 	TIM1->PSC &= ~0xFFFF;
 		//Setting to value to 7 (ftimimer = 16Mhz/(1+7))
-	TIM1-> PSC |= 7;
+	TIM1-> PSC = 7;
 	
 	//Set ARR value 
 		//Setting availible register to zero
 	TIM1-> ARR &= ~0xFFFF;
 		//Setting ARR to 100, a arbitary large value that will give resolution
-	TIM1-> ARR |= 1000;
+	TIM1-> ARR = 999;
 	
 	//Set the clear  the compare mode bits for channel 1 and set the PWM
 	TIM1->CCMR1 |= TIM_CCMR1_OC1M;
 	// Enabling preload in chanel one compare mode Ref. Man. pg.819
 	TIM1 -> CCMR1 |= TIM_CCMR1_OC1PE;
+	
 	//Set the output polarity for channel 1N to active high (active high = 0)
 	TIM1 -> CCER  &=  ~TIM_CCER_CC1NP;
+	//enable output for chanel 1N
+	TIM1 -> CCER |= TIM_CCER_CC1NE;
 	
-
+	//Main output enable
+	TIM1 -> BDTR |= TIM_BDTR_MOE;
+	
+	// Settng CCR
+	TIM1 -> CCR1 = 500;
+	
+	//Counter enable (through control regsiter to enable) 1 to enable 
+ 	TIM1 -> CR1  |= TIM_CR1_CEN;
 }
  
 int main() {
