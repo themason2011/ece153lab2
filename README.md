@@ -1,2 +1,3 @@
 # ece153lab2
-Added literally one thing see comments 
+main.c is part C. 
+Hopefully you can teach me how to organize the folders on here becuase I can't figure it out 
